@@ -20,7 +20,7 @@ export const UserSelector: React.FC<Props> = ({
   // and now we can easily reuse the `UserSelector` in any form
 
   // const users = useContext(UserContext);
-  const users = useAppSelector(state => state.users.items);
+  const users = useAppSelector(state => state.users) ?? [];
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
