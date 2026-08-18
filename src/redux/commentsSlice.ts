@@ -1,15 +1,14 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Comment } from '../types/Comment';
 
 export interface CommentsState {
-  comments: Comment[];
+  items: Comment[];
   loaded: boolean;
   hasError: boolean;
 }
 
 const initialState: CommentsState = {
-  comments: [],
+  items: [],
   loaded: false,
   hasError: false,
 };
@@ -19,45 +18,56 @@ export const commentsSlice = createSlice({
   initialState,
   reducers: {
     setLoading: state => {
-      state.hasError = false;
-      state.loaded = false;
+      return {
+        ...state,
+        hasError: false,
+        loaded: false,
+      };
     },
 
     setComments: (state, action: PayloadAction<Comment[]>) => {
-      state.comments = action.payload;
-      state.hasError = false;
-      state.loaded = true;
+      return {
+        ...state,
+        items: action.payload,
+        hasError: false,
+        loaded: true,
+      };
     },
 
     setError: state => {
-      state.hasError = true;
-      state.loaded = true;
-    },
-
-    clearComments: state => {
-      state.comments = [];
-      state.hasError = false;
-      state.loaded = false;
+      return {
+        ...state,
+        items: [],
+        hasError: true,
+        loaded: true,
+      };
     },
 
     addCommentAction: (state, action: PayloadAction<Comment>) => {
-      state.comments.push(action.payload);
+      return {
+        ...state,
+        items: [...state.items, action.payload],
+      };
     },
 
     deleteCommentAction: (state, action: PayloadAction<number>) => {
-      state.comments = state.comments.filter(
-        comment => comment.id !== action.payload,
-      );
+      return {
+        ...state,
+        items: state.items.filter(comment => comment.id !== action.payload),
+      };
     },
   },
 });
 
 export const {
-  addCommentAction,
-  deleteCommentAction,
   setComments,
   setError,
   setLoading,
-  clearComments,
+  addCommentAction,
+  deleteCommentAction,
 } = commentsSlice.actions;
+
+export const addComment = addCommentAction;
+export const deleteComment = deleteCommentAction;
+
 export default commentsSlice.reducer;

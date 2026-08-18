@@ -1,21 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../types/User';
 
-export interface UserState {
-  items: User[];
-}
-
-const initialState: UserState = {
-  items: [],
-};
+const initialState: User[] = [];
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setUsers: (state, action: PayloadAction<User[]>) => {
-      // eslint-disable-next-line no-param-reassign
-      state.items = action.payload;
+    setUsers: (_state, action: PayloadAction<User[]>) => {
+      return action.payload;
     },
   },
 });

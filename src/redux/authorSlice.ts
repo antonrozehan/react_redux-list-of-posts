@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../types/User';
 
 export interface AuthorState {
@@ -13,9 +13,11 @@ export const authorSlice = createSlice({
   name: 'author',
   initialState,
   reducers: {
-    setAuthor: (state, action) => {
-      // eslint-disable-next-line no-param-reassign
-      state.currentAuthor = action.payload;
+    setAuthor: (state, action: PayloadAction<User | null>) => {
+      return {
+        ...state,
+        currentAuthor: action.payload,
+      };
     },
   },
 });
